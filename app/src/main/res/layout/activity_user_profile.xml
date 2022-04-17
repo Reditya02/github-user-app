@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ui.detail.DetailUserActivity"
+    android:overScrollMode="never"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal" >
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:paddingTop="40dp"/>
+
+        <ImageButton
+            android:contentDescription="@string/favorite_button"
+            android:id="@+id/btn_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_not_favorite"
+            android:background="@null"/>
+
+        <ImageView
+            android:id="@+id/img_avatar"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="18dp"
+            android:contentDescription="@string/user_avatar" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            style="@style/text.title"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/text.subtitle"/>
+
+        <TableLayout
+            android:id="@+id/table_company_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:stretchColumns="1">
+
+
+            <TableRow>
+                <TextView
+                    style="@style/text.information"
+                    android:text="@string/company"/>
+                <TextView
+                    android:id="@+id/tv_company"
+                    style="@style/wrappedText.information"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    style="@style/text.information"
+                    android:text="@string/location"/>
+                <TextView
+                    android:id="@+id/tv_location"
+                    style="@style/wrappedText.information"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/table_repository_follower_following"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="30dp"
+            android:layout_marginTop="30dp"
+            android:stretchColumns="*">
+
+            <TableRow>
+                <TextView
+                    style="@style/wrappedText.header"
+                    android:text="@string/repositories"/>
+                <TextView
+                    style="@style/wrappedText.header"
+                    android:text="@string/followers"/>
+                <TextView
+                    style="@style/wrappedText.header"
+                    android:text="@string/following"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/tv_repositories"
+                    style="@style/wrappedText.value"/>
+                <TextView
+                    android:id="@+id/followers"
+                    style="@style/wrappedText.value"/>
+                <TextView
+                    android:id="@+id/following"
+                    style="@style/wrappedText.value"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:tabTextColor="@color/black"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+</ScrollView>

@@ -1,0 +1,72 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.GitHubUserApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryVariant">@color/dark_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/dark_grey</item>
+        <item name="colorSecondaryVariant">@color/grey</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <style name="text.title">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="text.subtitle">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="text.information">
+        <item name="android:padding">3dp</item>
+        <item name="color">@color/black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="wrappedText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <style name="wrappedText.header">
+        <item name="android:padding">3dp</item>
+        <item name="android:gravity">center</item>
+        <item name="color">@color/dark_grey</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="wrappedText.value">
+        <item name="android:padding">3dp</item>
+        <item name="android:gravity">center</item>
+        <item name="color">@color/black</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="wrappedText.information">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Theme.GitHubUserApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.GitHubUserApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.GitHubUserApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>
