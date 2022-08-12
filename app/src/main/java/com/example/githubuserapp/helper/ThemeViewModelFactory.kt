@@ -1,4 +1,4 @@
-package com.example.githubuserapp.viewModel
+package com.example.githubuserapp.helper
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory

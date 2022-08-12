@@ -10,11 +10,11 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import com.example.githubuserapp.Const.TIME_SPLASH
+import com.example.githubuserapp.helper.Const.TIME_SPLASH
 import com.example.githubuserapp.R
 import com.example.githubuserapp.model.locale.SettingPreferences
 import com.example.githubuserapp.ui.home.HomeActivity
-import com.example.githubuserapp.viewModel.ThemeViewModelFactory
+import com.example.githubuserapp.helper.ThemeViewModelFactory
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -25,9 +25,9 @@ class SplashScreenActivity : AppCompatActivity() {
 
         val pref = SettingPreferences.getInstance(dataStore)
 
-        val splashScreenViewModel = ViewModelProvider(this, ThemeViewModelFactory(pref)).get(
+        val splashScreenViewModel = ViewModelProvider(this, ThemeViewModelFactory(pref))[
             SplashScreenViewModel::class.java
-        )
+        ]
 
         Handler(mainLooper).postDelayed({
             splashScreenViewModel.getThemeSettings().observe(this) {
@@ -44,7 +44,7 @@ class SplashScreenActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-    fun intentToHome() {
+    private fun intentToHome() {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finishAffinity()

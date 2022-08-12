@@ -1,10 +1,8 @@
 package com.example.githubuserapp.ui.detail
 
 import android.app.Application
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
-import com.example.githubuserapp.Const.TAG
+import com.example.githubuserapp.helper.Message
 import com.example.githubuserapp.model.remote.ApiConfig
 import com.example.githubuserapp.model.UserResponse
 import com.example.githubuserapp.model.locale.User
@@ -33,6 +31,9 @@ class DetailUserViewModel(application: Application) : AndroidViewModel(applicati
     private val _isFollowLoading = MutableLiveData<Boolean>()
     val isFollowLoading: LiveData<Boolean> = _isFollowLoading
 
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
+
     private var database: UserDatabase? = UserDatabase.getInstance(application)
     private var userDao: UserDao? = database?.userDao()
 
@@ -47,15 +48,17 @@ class DetailUserViewModel(application: Application) : AndroidViewModel(applicati
             ) {
                 _isDetailLoading.postValue(false)
                 val responseBody = response.body()
-                if (responseBody != null) {
-                    _userDetail.postValue(responseBody!!)
+                if(responseBody != null) {
+                    responseBody.let {
+                        _userDetail.value = it
+                    }
                 } else {
-                    Log.d(TAG, "user null")
+                    _message.value = Message.CANNOT_SHOW_DETAIL_USER
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                Log.d(TAG, "Tidak dapat menampilkan detail user")
+                _message.value = Message.CANNOT_SHOW_DETAIL_USER
             }
         })
     }
@@ -71,18 +74,17 @@ class DetailUserViewModel(application: Application) : AndroidViewModel(applicati
                     val responseBody = response.body()
 
                     if (responseBody != null) {
-                        _listFollowers.postValue(response.body())
-                        Log.d(TAG, "SearchResultAAAA " + response.body().toString())
-                        Log.d(TAG, "LiveDataAAA " + listFollowers.value.toString())
-
+                        responseBody.let {
+                            _listFollowers.value = it
+                        }
                     } else {
-                        Log.d(TAG, "followers result null")
+                        _message.value = Message.CANNOT_SHOW_FOLLOW
                     }
                 }
             }
 
             override fun onFailure(call: Call<ArrayList<UserResponse>>, t: Throwable) {
-                Log.d(TAG, t.toString())
+                _message.value = Message.CANNOT_SHOW_FOLLOW
             }
         })
     }
@@ -93,20 +95,18 @@ class DetailUserViewModel(application: Application) : AndroidViewModel(applicati
             override fun onResponse(call: Call<ArrayList<UserResponse>>, response: Response<ArrayList<UserResponse>>) {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
-                    //val responseBody = Gson().fromJson<Response<ListResponse>>(response.body(), ListResponse::class.java)
                     if (responseBody != null) {
-                        _listFollowing.postValue(response.body())
-                        Log.d(TAG, "SearchResultAAAA " + response.body().toString())
-                        Log.d(TAG, "LiveDataAAA " + listFollowers.value.toString())
-
+                        responseBody.let {
+                            _listFollowing.value = it
+                        }
                     } else {
-                        Log.d(TAG, "followers result null")
+                        _message.value = Message.CANNOT_SHOW_FOLLOW
                     }
                 }
             }
 
             override fun onFailure(call: Call<ArrayList<UserResponse>>, t: Throwable) {
-                TODO("Not yet implemented")
+                _message.value = Message.CANNOT_SHOW_FOLLOW
             }
         })
     }

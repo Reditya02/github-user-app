@@ -1,7 +1,7 @@
 package com.example.githubuserapp.model.remote
 
-import com.example.githubuserapp.Const.BASE_URL
-import com.example.githubuserapp.Const.GITHUB_TOKEN
+import com.example.githubuserapp.helper.Const.BASE_URL
+import com.example.githubuserapp.helper.Const.GITHUB_TOKEN
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

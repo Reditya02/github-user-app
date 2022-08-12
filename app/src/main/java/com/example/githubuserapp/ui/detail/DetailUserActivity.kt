@@ -40,21 +40,23 @@ class DetailUserActivity : AppCompatActivity() {
         viewModel.showDetailUser(username)
 
         val observerProfile = Observer<UserResponse> {
-            val company = " : ${it.company}"
-            val location = " : ${it.location}"
+            val company = " : ${it.company ?: "-"}"
+            val location = " : ${it.location ?: "-"}"
 
             Glide.with(this)
                 .load(it.avatarUrl)
                 .circleCrop()
                 .into(binding.imgAvatar)
 
-            binding.tvUsername.text = it.login
-            binding.tvName.text = it.name
-            binding.tvRepositories.text = it.publicRepos.toString()
-            binding.followers.text = it.followers.toString()
-            binding.following.text = it.following.toString()
-            binding.tvCompany.text = company
-            binding.tvLocation.text = location
+            binding.apply {
+                tvUsername.text = it.login
+                tvName.text = it.name
+                tvRepositories.text = it.publicRepos.toString()
+                followers.text = it.followers.toString()
+                following.text = it.following.toString()
+                tvCompany.text = company
+                tvLocation.text = location
+            }
 
             user = User(
                 it?.avatarUrl,
@@ -63,7 +65,7 @@ class DetailUserActivity : AppCompatActivity() {
             )
 
             CoroutineScope(Dispatchers.IO).launch {
-                val count = viewModel.checkUserFavorite(user.id!!)
+                val count = user.id?.let { id -> viewModel.checkUserFavorite(id) }
                 withContext(Dispatchers.Main) {
                     if (count == 1) {
                         binding.btnFavorite.setImageDrawable(
@@ -78,9 +80,15 @@ class DetailUserActivity : AppCompatActivity() {
                 }
             }
         }
-        viewModel.userDetail.observe(this, observerProfile)
-        viewModel.showFollowers(username)
-        viewModel.showFollowing(username)
+
+        viewModel.apply {
+            userDetail.observe(this@DetailUserActivity, observerProfile)
+            message.observe(this@DetailUserActivity) {
+                makeToast(it)
+            }
+            showFollowers(username)
+            showFollowing(username)
+        }
 
         binding.btnFavorite.setOnClickListener {
             if (isFavorite == 1) {
@@ -92,11 +100,7 @@ class DetailUserActivity : AppCompatActivity() {
                 )
                 viewModel.removeFavoriteUser(user.id!!)
 
-                Toast.makeText(
-                    this,
-                    "User telah dihapus dari daftar Favorite",
-                    Toast.LENGTH_SHORT
-                ).show()
+                makeToast("User telah dihapus dari daftar Favorite")
                 isFavorite = 0
             } else {
                 binding.btnFavorite.setImageDrawable(
@@ -105,16 +109,9 @@ class DetailUserActivity : AppCompatActivity() {
                         R.drawable.ic_favorite
                     )
                 )
-                if (username != null) {
-                    viewModel.addToFavoriteUser(user)
-                }
+                viewModel.addToFavoriteUser(user)
 
-
-                Toast.makeText(
-                    this,
-                    "Sukses Menambahkan kedaftar Favorite",
-                    Toast.LENGTH_SHORT
-                ).show()
+                makeToast("Sukses Menambahkan kedaftar Favorite")
 
                 isFavorite = 1
             }
@@ -125,17 +122,34 @@ class DetailUserActivity : AppCompatActivity() {
         }
     }
 
+    private fun makeToast(message: String) {
+        Toast.makeText(
+            this,
+            message,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
     private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        binding.btnFavorite.visibility = if (isLoading) View.GONE else View.VISIBLE
-        binding.tvUsername.visibility = if (isLoading) View.GONE else View.VISIBLE
-        binding.tvName.visibility = if (isLoading) View.GONE else View.VISIBLE
-        binding.tableCompanyLocation.visibility = if (isLoading) View.GONE else View.VISIBLE
-        binding.tableRepositoryFollowerFollowing.visibility = if (isLoading) View.GONE else View.VISIBLE
-        binding.tabs.visibility = if (isLoading) View.GONE else View.VISIBLE
-        binding.viewPager.visibility = if (isLoading) View.GONE else View.VISIBLE
 
+        var loadingVisibility: Int = View.GONE
+        var componentVisibility: Int = View.VISIBLE
 
+        if (isLoading) {
+            loadingVisibility = View.VISIBLE
+            componentVisibility = View.GONE
+        }
+
+        binding.apply {
+            progressBar.visibility = loadingVisibility
+            btnFavorite.visibility = componentVisibility
+            tvUsername.visibility = componentVisibility
+            tvName.visibility = componentVisibility
+            tableCompanyLocation.visibility = componentVisibility
+            tableRepositoryFollowerFollowing.visibility = componentVisibility
+            tabs.visibility = componentVisibility
+            viewPager.visibility = componentVisibility
+        }
     }
 
     companion object {

@@ -11,7 +11,7 @@ import com.example.githubuserapp.databinding.ActivitySettingBinding
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.ViewModelProvider
 import com.example.githubuserapp.model.locale.SettingPreferences
-import com.example.githubuserapp.viewModel.ThemeViewModelFactory
+import com.example.githubuserapp.helper.ThemeViewModelFactory
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -26,9 +26,9 @@ class SettingActivity : AppCompatActivity() {
 
         val pref = SettingPreferences.getInstance(dataStore)
 
-        val settingViewModel = ViewModelProvider(this, ThemeViewModelFactory(pref)).get(
+        val settingViewModel = ViewModelProvider(this, ThemeViewModelFactory(pref))[
             SettingViewModel::class.java
-        )
+        ]
 
         settingViewModel.getThemeSettings().observe(this) {
             if (it) {

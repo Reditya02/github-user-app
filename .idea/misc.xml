@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Kuliah/Kelas/Semester 6/bangkit/Dicoding/2. Fundamental Android/Submission 1/app/src/main/res/layout/activity_favorite.xml" value="0.18645833333333334" />
+        <entry key="..\:/Kuliah/Kelas/Semester 6/bangkit/Dicoding/2. Fundamental Android/Submission 1/app/src/main/res/layout/activity_home.xml" value="0.1921875" />
+        <entry key="..\:/Kuliah/Kelas/Semester 6/bangkit/Dicoding/2. Fundamental Android/Submission 1/app/src/main/res/layout/activity_user_profile.xml" value="0.1" />
+        <entry key="..\:/Kuliah/Kelas/Semester 6/bangkit/Dicoding/2. Fundamental Android/Submission 1/app/src/main/res/layout/card_user.xml" value="0.14444444444444443" />
+        <entry key="..\:/Kuliah/Kelas/Semester 6/bangkit/Dicoding/2. Fundamental Android/Submission 1/app/src/main/res/layout/fragment_followers.xml" value="0.18645833333333334" />
+        <entry key="..\:/Kuliah/Kelas/Semester 6/bangkit/Dicoding/2. Fundamental Android/Submission 1/app/src/main/res/layout/fragment_following.xml" value="0.18645833333333334" />
         <entry key="..\:/Kuliah/Kelas/bangkit/2. Fundamental Android/Submission 1/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/Kuliah/Kelas/bangkit/2. Fundamental Android/Submission 1/app/src/main/res/layout/card_user.xml" value="0.1" />
         <entry key="..\:/Kuliah/Kelas/bangkit/2. Fundamental Android/Submission 1/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1345" />

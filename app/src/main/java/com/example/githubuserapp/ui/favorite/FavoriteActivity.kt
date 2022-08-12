@@ -28,8 +28,6 @@ class FavoriteActivity : AppCompatActivity() {
             }
             showRecycler(list)
         }
-
-
     }
 
     private fun viewList(users: List<User>): List<User> {

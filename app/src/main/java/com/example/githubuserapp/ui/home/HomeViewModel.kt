@@ -1,11 +1,9 @@
 package com.example.githubuserapp.ui.home
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.githubuserapp.Const.TAG
+import com.example.githubuserapp.helper.Message
 import com.example.githubuserapp.model.remote.ApiConfig
 import com.example.githubuserapp.model.ListResponse
 import retrofit2.Call
@@ -19,6 +17,9 @@ class HomeViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
+
     fun searchUser(query: String) {
         _isLoading.postValue(true)
         val client = ApiConfig.getApiService().searchUsers(query)
@@ -31,13 +32,17 @@ class HomeViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-                        _list.setValue(responseBody!!)
+                        responseBody.let {
+                            _list.value = it
+                        }
+                    } else {
+                        _message.value = Message.SEARCH_NOT_FOUND
                     }
                 }
             }
 
             override fun onFailure(call: Call<ListResponse>, t: Throwable) {
-                Log.d(TAG, "Tidak dapat menampilkan hasil pencarian")
+                _message.value = Message.SEARCH_NOT_FOUND
             }
         })
     }

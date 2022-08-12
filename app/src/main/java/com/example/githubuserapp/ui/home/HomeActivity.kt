@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubuserapp.databinding.ActivityHomeBinding
 import androidx.activity.viewModels
@@ -20,40 +21,52 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private val viewModel: HomeViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.rvListUser.setHasFixedSize(true)
+        binding.apply {
+            binding.rvListUser.setHasFixedSize(true)
 
-        binding.searchView.setOnQueryTextListener( object : SearchView.OnQueryTextListener,
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                val query = p0.toString().filter { !it.isWhitespace() }
-                viewModel.searchUser(query)
-                val observer = Observer<ListResponse> {
-                    showRecycler(it)
+            binding.searchView.setOnQueryTextListener( object : SearchView.OnQueryTextListener,
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    val query = p0.toString().filter { !it.isWhitespace() }
+                    viewModel.searchUser(query)
+                    val observer = Observer<ListResponse> {
+                        showRecycler(it)
+                    }
+                    viewModel.list.observe(this@HomeActivity, observer)
+                    return true
                 }
-                viewModel.list.observe(this@HomeActivity, observer)
-                return true
-            }
 
-            override fun onQueryTextChange(p0: String?): Boolean {
-                return false
-            }
-        })
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    return false
+                }
+            })
+        }
 
-        viewModel.isLoading.observe(this) {
-            showLoading(it)
+        viewModel.apply {
+            isLoading.observe(this@HomeActivity) {
+                showLoading(it)
+            }
+            message.observe(this@HomeActivity) {
+                Toast.makeText(
+                    this@HomeActivity,
+                    it,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
     private fun showRecycler(list: ListResponse) {
-        binding.rvListUser.layoutManager = LinearLayoutManager(this)
-        val adapter = UserAdapter(list)
-        binding.rvListUser.adapter = adapter
+        binding.apply {
+            rvListUser.layoutManager = LinearLayoutManager(this@HomeActivity)
+            val adapter = UserAdapter(list)
+            rvListUser.adapter = adapter
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
